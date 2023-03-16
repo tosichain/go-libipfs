@@ -42,7 +42,7 @@ func NewSerialFile(path string, includeHidden bool, stat os.FileInfo) (Node, err
 // operated upon if the filepath is a directory, and a fileInfo and returns a
 // Node representing file, directory or special file.
 func NewSerialFileWithFilter(path string, filter *Filter, stat os.FileInfo) (Node, error) {
-	if (state.Mode() & os.ModeDevice) == os.ModeDevice {
+	if (stat.Mode() & os.ModeDevice) == os.ModeDevice {
 		file, err := os.Open(path)
 		if err != nil {
 			return nil, err
