@@ -43,13 +43,14 @@ func NewSerialFile(path string, includeHidden bool, stat os.FileInfo) (Node, err
 // Node representing file, directory or special file.
 func NewSerialFileWithFilter(path string, filter *Filter, stat os.FileInfo) (Node, error) {
 	switch mode := stat.Mode(); {
-	case mode.IsRegular():
+	if (mode & os.ModeDevice) == os.ModeDevice {
 		file, err := os.Open(path)
 		if err != nil {
 			return nil, err
 		}
 		return NewReaderPathFile(path, file, stat)
-	case mode.IsDevice():
+	}
+	case mode.IsRegular():
 		file, err := os.Open(path)
 		if err != nil {
 			return nil, err
