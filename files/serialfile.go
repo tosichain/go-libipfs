@@ -49,6 +49,12 @@ func NewSerialFileWithFilter(path string, filter *Filter, stat os.FileInfo) (Nod
 			return nil, err
 		}
 		return NewReaderPathFile(path, file, stat)
+	case mode.IsDevice():
+		file, err := os.Open(path)
+		if err != nil {
+			return nil, err
+		}
+		return NewReaderPathFile(path, file, stat)
 	case mode.IsDir():
 		// for directories, stat all of the contents first, so we know what files to
 		// open when Entries() is called
