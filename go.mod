@@ -1,4 +1,4 @@
-module github.com/ipfs/go-libipfs
+module github.com/tosichain/go-libipfs
 
 go 1.19
 
